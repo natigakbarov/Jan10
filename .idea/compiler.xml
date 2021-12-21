@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="YFrameworkFinalC4" />
         <module name="zk" />
+        <module name="OrkhanFinalFrameWorkDec9" />
         <module name="YFrameworkFinal" />
         <module name="YFramework" />
         <module name="NFTDB" />
