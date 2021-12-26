@@ -1,0 +1,148 @@
+Index: .idea/runConfigurations.xml
+===================================================================
+diff --git a/.idea/runConfigurations.xml b/.idea/runConfigurations.xml
+deleted file mode 100644
+--- a/.idea/runConfigurations.xml	(revision f21586d2df3747a237de41e75aea1bb2db1a7a7d)
++++ /dev/null	(revision f21586d2df3747a237de41e75aea1bb2db1a7a7d)
+@@ -1,10 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="RunConfigurationProducerService">
+-    <option name="ignoredProducers">
+-      <set>
+-        <option value="com.android.tools.idea.compose.preview.runconfiguration.ComposePreviewRunConfigurationProducer" />
+-      </set>
+-    </option>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: src/test/java/runners/UITestRunner.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package runners;\r\n\r\n\r\nimport io.cucumber.junit.Cucumber;\r\nimport io.cucumber.junit.CucumberOptions;\r\nimport org.junit.runner.RunWith;\r\n\r\n@RunWith(Cucumber.class)\r\n@CucumberOptions(\r\n        plugin = {\"pretty\",\"html:target/cucumber\",\r\n        \"json:target/cucumber.json\"},\r\n        features=\"src/test/resources/uiFeatures\",\r\n        glue=\"ui_automation.step_definitions\",\r\n        tags=\"@hrm\",\r\n        dryRun = false\r\n        //monochrome = true\r\n)\r\n\r\npublic class UITestRunner {\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/runners/UITestRunner.java b/src/test/java/runners/UITestRunner.java
+--- a/src/test/java/runners/UITestRunner.java	(revision f21586d2df3747a237de41e75aea1bb2db1a7a7d)
++++ b/src/test/java/runners/UITestRunner.java	(date 1639527786805)
+@@ -1,6 +1,4 @@
+ package runners;
+-
+-
+ import io.cucumber.junit.Cucumber;
+ import io.cucumber.junit.CucumberOptions;
+ import org.junit.runner.RunWith;
+@@ -11,7 +9,7 @@
+         "json:target/cucumber.json"},
+         features="src/test/resources/uiFeatures",
+         glue="ui_automation.step_definitions",
+-        tags="@hrm",
++        tags="@runExpense",
+         dryRun = false
+         //monochrome = true
+ )
+Index: src/test/java/ui_automation/utilities/BrowserFactory.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ui_automation.utilities;\r\n\r\nimport io.github.bonigarcia.wdm.WebDriverManager;\r\nimport org.openqa.selenium.WebDriver;\r\nimport org.openqa.selenium.WebDriverException;\r\nimport org.openqa.selenium.chrome.ChromeDriver;\r\nimport org.openqa.selenium.chrome.ChromeOptions;\r\nimport org.openqa.selenium.edge.EdgeDriver;\r\nimport org.openqa.selenium.firefox.FirefoxDriver;\r\nimport org.openqa.selenium.firefox.FirefoxOptions;\r\nimport org.openqa.selenium.ie.InternetExplorerDriver;\r\nimport org.openqa.selenium.remote.RemoteWebDriver;\r\nimport org.openqa.selenium.safari.SafariDriver;\r\n\r\nimport java.net.MalformedURLException;\r\nimport java.net.URL;\r\n\r\npublic class BrowserFactory {\r\n        public static WebDriver createInstance() {\r\n\r\n            WebDriver driver = null;\r\n\r\n            try {\r\n                if (driver == null) {\r\n                    if(System.getProperty(\"browser\")==null){\r\n                        WebDriverManager.chromedriver().setup();\r\n                        driver = new ChromeDriver();\r\n                    }\r\n                    else {\r\n                        switch (System.getProperty(\"browser\")) {\r\n                            case \"chrome-headless\":\r\n                                WebDriverManager.chromedriver().setup();\r\n                                driver = new ChromeDriver(new ChromeOptions().setHeadless(true));\r\n                                break;\r\n                            case \"chromeRemote\":\r\n                                ChromeOptions chrOptions = new ChromeOptions();\r\n                                try {\r\n                                    driver = new RemoteWebDriver(new URL(\"http://54.88.214.189:4444/wd/hub\"), chrOptions);\r\n                                } catch (MalformedURLException e) {\r\n                                    e.printStackTrace();\r\n                                }\r\n                                break;\r\n                            case \"firefox\":\r\n                                WebDriverManager.firefoxdriver().setup();\r\n                                driver = new FirefoxDriver();\r\n                                break;\r\n                            case \"firefox-headless\":\r\n                                WebDriverManager.firefoxdriver().setup();\r\n                                driver = new FirefoxDriver(new FirefoxOptions().setHeadless(true));\r\n                                break;\r\n                            case \"firefoxRemote\":\r\n                                FirefoxOptions firOptions = new FirefoxOptions();\r\n                                try {\r\n                                    driver = new RemoteWebDriver(new URL(\"http://54.88.214.189:4444/wd/hub\"), firOptions);\r\n                                } catch (MalformedURLException e) {\r\n                                    e.printStackTrace();\r\n                                }\r\n                                break;\r\n                            case \"ie\":\r\n                                if (System.getProperty(\"os.name\").toLowerCase().contains(\"mac\")) {\r\n                                    throw new WebDriverException(\"Your operating system does not support the requested browser\");\r\n                                }\r\n                                WebDriverManager.iedriver().setup();\r\n                                driver = new InternetExplorerDriver();\r\n                                break;\r\n\r\n                            case \"edge\":\r\n                                if (System.getProperty(\"os.name\").toLowerCase().contains(\"mac\")) {\r\n                                    throw new WebDriverException(\"Your operating system does not support the requested browser\");\r\n                                }\r\n                                WebDriverManager.edgedriver().setup();\r\n                                driver = new EdgeDriver();\r\n                                break;\r\n\r\n                            case \"safari\":\r\n                                if (System.getProperty(\"os.name\").toLowerCase().contains(\"windows\")) {\r\n                                    throw new WebDriverException(\"Your operating system does not support the requested browser\");\r\n                                }\r\n                                WebDriverManager.getInstance(SafariDriver.class).setup();\r\n                                driver = new SafariDriver();\r\n                                break;\r\n                            default:\r\n                                WebDriverManager.chromedriver().setup();\r\n                                driver = new ChromeDriver();\r\n                                break;\r\n                        }\r\n                    }\r\n                }\r\n            } catch (Exception e) {\r\n                e.printStackTrace();\r\n                return null;\r\n            }\r\n            return driver;\r\n        }\r\n    }
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/ui_automation/utilities/BrowserFactory.java b/src/test/java/ui_automation/utilities/BrowserFactory.java
+--- a/src/test/java/ui_automation/utilities/BrowserFactory.java	(revision f21586d2df3747a237de41e75aea1bb2db1a7a7d)
++++ b/src/test/java/ui_automation/utilities/BrowserFactory.java	(date 1639527786621)
+@@ -14,6 +14,7 @@
+ 
+ import java.net.MalformedURLException;
+ import java.net.URL;
++import java.util.HashMap;
+ 
+ public class BrowserFactory {
+         public static WebDriver createInstance() {
+@@ -25,6 +26,15 @@
+                     if(System.getProperty("browser")==null){
+                         WebDriverManager.chromedriver().setup();
+                         driver = new ChromeDriver();
++
++//                        WebDriverManager.chromedriver().setup();
++//                        HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
++//                        chromePrefs.put("profile.default_content_settings.popups", 0);
++//                        chromePrefs.put("download.default_directory",
++//                                System.getProperty("user.dir")+"/src/test/resources/testData/downloads");
++//                        ChromeOptions options = new ChromeOptions();
++//                        options.setExperimentalOption("prefs", chromePrefs);
++//                        driver = new ChromeDriver(options);
+                     }
+                     else {
+                         switch (System.getProperty("browser")) {
+Index: src/test/java/ui_automation/utilities/ExcelUtility.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ui_automation.utilities;\r\n\r\nimport org.apache.poi.xssf.usermodel.*;\r\n\r\nimport java.io.File;\r\nimport java.io.FileInputStream;\r\nimport java.io.FileOutputStream;\r\nimport java.io.IOException;\r\n\r\nimport org.apache.poi.ss.usermodel.Row.MissingCellPolicy;\r\npublic class ExcelUtility {\r\n    private static XSSFSheet workSheet;\r\n    private static XSSFWorkbook workBook;\r\n    private static XSSFCell cell;\r\n    private static XSSFRow row;\r\n    private static MissingCellPolicy xRow;\r\n\r\n\r\n    public static void setExcelFile(String Path, String SheetName) throws Exception {\r\n        try {\r\n            FileInputStream ExcelFile = new FileInputStream(Path);\r\n            workBook = new XSSFWorkbook(ExcelFile);\r\n            workSheet = workBook.getSheet(SheetName);\r\n        } catch (Exception e) {\r\n\r\n            throw (e);\r\n\r\n        }\r\n    }\r\n\r\n    public static String getCellData(int RowNum, int ColNum) throws Exception{\r\n        try{\r\n            cell = workSheet.getRow(RowNum).getCell(ColNum);\r\n            return cell.getStringCellValue();\r\n        }catch (Exception e){\r\n            return\"\";\r\n        }\r\n    }\r\n\r\n\r\n    public static void setCellData(String path, String value,  int RowNum, int ColNum) throws Exception {\r\n        try{\r\n            row  = workSheet.getRow(RowNum);\r\n            cell = row.getCell(ColNum);\r\n            if (cell == null) {\r\n                cell = row.createCell(ColNum);\r\n                cell.setCellValue(value);\r\n            } else {\r\n                cell.setCellValue(value);\r\n            }\r\n            FileOutputStream fileOut = new FileOutputStream(path);\r\n            workBook.write(fileOut);\r\n            fileOut.flush();\r\n            fileOut.close();\r\n        }catch(Exception e){\r\n\r\n            throw (e);\r\n\r\n        }\r\n\r\n    }\r\n\r\n\r\n    public static void createExcelAndWrite(String fileName, String value){\r\n        workBook = new XSSFWorkbook();\r\n        workSheet = workBook.createSheet(\"FIRST SHEET\");\r\n        row = workSheet.createRow(0);\r\n        cell = row.createCell(0);\r\n        cell.setCellValue(value);\r\n        try (FileOutputStream fos = new FileOutputStream(new File(fileName)))\r\n        {\r\n            workBook.write(fos);\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/ui_automation/utilities/ExcelUtility.java b/src/test/java/ui_automation/utilities/ExcelUtility.java
+--- a/src/test/java/ui_automation/utilities/ExcelUtility.java	(revision f21586d2df3747a237de41e75aea1bb2db1a7a7d)
++++ b/src/test/java/ui_automation/utilities/ExcelUtility.java	(date 1639527786714)
+@@ -37,6 +37,15 @@
+         }
+     }
+ 
++    public static double getCellDataAsDouble(int RowNum, int ColNum) throws Exception{
++        try{
++            cell = workSheet.getRow(RowNum).getCell(ColNum);
++            return cell.getNumericCellValue();
++        }catch (Exception e){
++            return 0.0;
++        }
++    }
++
+ 
+     public static void setCellData(String path, String value,  int RowNum, int ColNum) throws Exception {
+         try{
+Index: src/test/resources/ui-config.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>mysql.url: jdbc:mysql://dev-hrm.yoll.io:3306/orangehrm_mysql\r\nyollhrm.url: http://dev-hrm.yoll.io/\r\nyollhrm.username:yoll-student\r\nyollhrm.password:Bootcamp5#\r\nyollhrm.database.username: root\r\nyollhrm.database.password: Bootcamp5#\r\nmealb.url: http://dev-mb.yoll.io/\r\nmb.database.url: jdbc:sqlserver://34.235.0.4:1433;databaseName=MealBDb\r\nmb.database.username: SA\r\nmb.database.password: asdf123!@#
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/src/test/resources/ui-config.properties b/src/test/resources/ui-config.properties
+--- a/src/test/resources/ui-config.properties	(revision f21586d2df3747a237de41e75aea1bb2db1a7a7d)
++++ b/src/test/resources/ui-config.properties	(date 1639527786322)
+@@ -5,6 +5,11 @@
+ yollhrm.database.username: root
+ yollhrm.database.password: Bootcamp5#
+ mealb.url: http://dev-mb.yoll.io/
++mealb.login.url: http://dev-mb.yoll.io/Account/Login
++mealb.username: admin
++mealb.password: 123qwe
+ mb.database.url: jdbc:sqlserver://34.235.0.4:1433;databaseName=MealBDb
+ mb.database.username: SA
+-mb.database.password: asdf123!@#
+\ No newline at end of file
++mb.database.password: asdf123!@#
++
++download.url: http://demo.automationtesting.in/FileDownload.html
+\ No newline at end of file
+Index: src/test/java/ui_automation/step_definitions/Hooks.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ui_automation.step_definitions;\r\n\r\n\r\nimport io.cucumber.core.api.Scenario;\r\nimport io.cucumber.java.After;\r\nimport io.cucumber.java.Before;\r\nimport org.openqa.selenium.OutputType;\r\nimport org.openqa.selenium.TakesScreenshot;\r\nimport org.openqa.selenium.WebDriver;\r\nimport ui_automation.utilities.BrowserFactory;\r\nimport ui_automation.utilities.Driver;\r\n\r\nimport java.util.concurrent.TimeUnit;\r\n\r\npublic class Hooks {\r\n    public WebDriver driver=null;\r\n\r\n    @Before\r\n    public void setUp(){\r\n        driver= BrowserFactory.createInstance();\r\n        Driver.getInstance().setDriver(driver);\r\n        driver=Driver.getInstance().getDriver();\r\n\r\n        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);\r\n        driver.manage().window().maximize();\r\n    }\r\n\r\n    @After\r\n    public void tearDown(Scenario scenario) {\r\n        if (scenario.isFailed()) {\r\n            final byte[] screenshot = ((TakesScreenshot) Driver.getInstance().getDriver()).getScreenshotAs(OutputType.BYTES);\r\n            scenario.embed(screenshot, \"image/png\");\r\n        }\r\n       Driver.getInstance().removeDriver();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/ui_automation/step_definitions/Hooks.java b/src/test/java/ui_automation/step_definitions/Hooks.java
+--- a/src/test/java/ui_automation/step_definitions/Hooks.java	(revision f21586d2df3747a237de41e75aea1bb2db1a7a7d)
++++ b/src/test/java/ui_automation/step_definitions/Hooks.java	(date 1639527786736)
+@@ -31,6 +31,6 @@
+             final byte[] screenshot = ((TakesScreenshot) Driver.getInstance().getDriver()).getScreenshotAs(OutputType.BYTES);
+             scenario.embed(screenshot, "image/png");
+         }
+-       Driver.getInstance().removeDriver();
++//       Driver.getInstance().removeDriver();
+     }
+ }
+\ No newline at end of file

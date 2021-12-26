@@ -8,5 +8,3 @@ Feature: As an administrator I should be able to view all employees and search.
     Then I see employee list table
     #test comment
 #A new feature file has been created
-
-  #Working on user story 001
