@@ -9,6 +9,12 @@ Feature: As an administrator I should be able to view all employees and search.
 
     @HRM
     Scenario: Edit an Employee
-    And I click on the Employee List
-    #Then I edit an employee
+      And I click on the Employee List
+      #Then I edit an employee
+
+    @HRM
+    Scenario: Editing without name change
+      And I click on the Employee List
+      #Then I edit an employee without changing name
+      #Then I should see the edited changes
 
