@@ -9,3 +9,6 @@ Feature: This feature file is verifying MealB expense functionality
     Then user completes all fields on "Meal and Entertainment" expense modal window
     Then user clicks on "Save" button
     And user verifies created "Meal and Entertainment" expense on expenses table
+
+
+
