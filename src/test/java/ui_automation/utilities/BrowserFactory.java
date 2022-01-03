@@ -14,7 +14,6 @@ import org.openqa.selenium.safari.SafariDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
 
 public class BrowserFactory {
         public static WebDriver createInstance() {
@@ -26,15 +25,6 @@ public class BrowserFactory {
                     if(System.getProperty("browser")==null){
                         WebDriverManager.chromedriver().setup();
                         driver = new ChromeDriver();
-
-//                        WebDriverManager.chromedriver().setup();
-//                        HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
-//                        chromePrefs.put("profile.default_content_settings.popups", 0);
-//                        chromePrefs.put("download.default_directory",
-//                                System.getProperty("user.dir")+"/src/test/resources/testData/downloads");
-//                        ChromeOptions options = new ChromeOptions();
-//                        options.setExperimentalOption("prefs", chromePrefs);
-//                        driver = new ChromeDriver(options);
                     }
                     else {
                         switch (System.getProperty("browser")) {
