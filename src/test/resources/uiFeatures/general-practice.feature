@@ -1,6 +1,6 @@
 Feature: This feature file tests iFrame Page functionality
 
-  @runiFrame @parallel
+  @runiFrame @parallel @run
   Scenario: User should be able  verify frame on Frame Page
     Given Navigate to "http://the-internet.herokuapp.com"
     When user clicks on Frames tab
