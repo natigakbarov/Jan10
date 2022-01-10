@@ -28,13 +28,21 @@ public class ExcelUtility {
         }
     }
 
-    public static Object getCellData(int RowNum, int ColNum) throws Exception{
+    public static String getCellData(int RowNum, int ColNum) throws Exception{
         try{
             cell = workSheet.getRow(RowNum).getCell(ColNum);
             return cell.getStringCellValue();
-        }catch (Exception IllegalStateException){
+        }catch (Exception e){
+            return"";
+        }
+    }
+
+    public static double getCellDataAsDouble(int RowNum, int ColNum) throws Exception{
+        try{
             cell = workSheet.getRow(RowNum).getCell(ColNum);
             return cell.getNumericCellValue();
+        }catch (Exception e){
+            return 0.0;
         }
     }
 
