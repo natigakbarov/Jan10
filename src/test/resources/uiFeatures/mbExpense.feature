@@ -17,4 +17,6 @@ Feature: This feature file is verifying MealB expense functionality
 #    Then user navigates to "Meal and Entertainment" expense modal window
 #    Then user completes all fields on "Meal and Entertainment" expense modal window
 #    Then user clicks on "Save" button
+#    checking git repo
+
     And user compares UI values with DB values
