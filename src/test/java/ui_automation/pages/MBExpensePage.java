@@ -1,6 +1,6 @@
 package ui_automation.pages;
 
-import com.sun.org.apache.xalan.internal.res.XSLTErrorResources_en;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
